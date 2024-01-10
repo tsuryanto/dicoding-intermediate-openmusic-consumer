@@ -1,0 +1,17 @@
+require('dotenv').config();
+
+const PlaylistService = require('./service');
+const PlaylistListener = require('./listener');
+const PlaylistRepository = require('./repository');
+
+const InitPlaylistsConsumer = async (dbPool, channel) => {
+  const playlistRepo = new PlaylistRepository(dbPool);
+  const playlistService = new PlaylistService(playlistRepo);
+  const listener = new PlaylistListener(playlistService);
+
+  const queueName = 'export:playlists';
+  await channel.assertQueue(queueName, { durable: true });
+  channel.consume(queueName, listener.exportPlaylists, { noAck: true });
+};
+
+module.exports = InitPlaylistsConsumer;

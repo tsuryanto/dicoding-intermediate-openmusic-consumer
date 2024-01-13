@@ -3,8 +3,6 @@ const MailSender = require('../../utils/mail/sender');
 class PlaylistListener {
   constructor(service) {
     this.service = service;
-
-    this.exportPlaylists = this.exportPlaylists.bind(this);
   }
 
   async exportPlaylists(message) {

@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const PlaylistService = require('./service');
 const PlaylistListener = require('./listener');
 const PlaylistRepository = require('./repository');

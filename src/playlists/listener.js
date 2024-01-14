@@ -5,12 +5,12 @@ class PlaylistListener {
     this.service = service;
   }
 
-  async exportPlaylists(message) {
+  async exportPlaylist(message) {
     const sender = new MailSender();
     try {
-      const { userId, playlistId, targetEmail } = JSON.parse(message.content.toString());
+      const { playlistId, targetEmail } = JSON.parse(message.content.toString());
 
-      const playlists = await this.service.getPlaylists(userId, playlistId);
+      const playlist = await this.service.getPlaylist(playlistId);
       const result = await sender.sendEmail({
         from: 'OpenMusic',
         to: targetEmail,
@@ -18,8 +18,8 @@ class PlaylistListener {
         text: 'Terlampir hasil data export',
         attachments: [
           {
-            filename: 'playlists.json',
-            content: JSON.stringify({ playlists }, null, 4),
+            filename: 'playlist_songs.json',
+            content: JSON.stringify({ playlist }, null, 4),
           },
         ],
       });

@@ -9,7 +9,7 @@ const InitPlaylistsConsumer = async (dbPool, channel) => {
 
   const queueName = 'export:playlists';
   await channel.assertQueue(queueName, { durable: true });
-  channel.consume(queueName, (message) => listener.exportPlaylists(message), { noAck: true });
+  channel.consume(queueName, (message) => listener.exportPlaylist(message), { noAck: true });
 };
 
 module.exports = InitPlaylistsConsumer;
